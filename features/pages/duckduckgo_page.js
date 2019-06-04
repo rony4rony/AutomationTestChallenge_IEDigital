@@ -3,6 +3,7 @@ const {Selector} = require('testcafe')
 module.exports = {
 
     url: `${process.env.TESTCAFE_URL}`,
+    trafficURL:`https://start.duckduckgo.com/traffic`,
     
     DDGElements: 
     {       
@@ -41,23 +42,33 @@ module.exports = {
         darkTheme: function() 
         {
             return Selector('.set-themes__wrapper:nth-child(4) > .set-theme').with({ boundTestRun: testController })
-        },
+        }, 
         pageSettings: function() 
         {
             return Selector('.page-settings').with({ boundTestRun: testController })
-        },
-        /*privacyLink: function()
-        {
-            return Selector('.js-popout-link').with({ boundTestRun: testController })
-        },
-        trafficLink: function()
-        {
-            return Selector('.fix:nth-child(2) > .showcase__text').with({ boundTestRun: testController })
-        },
-        TwoZeroOneEightTraffic: function()
+        },        
+        TwoZeroOneEightTrafficSection: function()
         {
             return Selector('.blk__text:nth-child(3) > .traffic__year > .wrap').with({ boundTestRun: testController })
-        },*/
+        },
+        TwoZeroOneEightTotalTraffic: function()
+        {
+            return Selector('.blk__text:nth-child(3) .traffic__year__right > h2').with({ boundTestRun: testController })
+        },
+        elementsOfMonths: function(i, j)
+        {
+            switch (i)
+            {
+                case 1: //MONTH 2 to 13 (Dec to Jan)
+                    {
+                        return Selector('.blk__text:nth-child(3) .traffic__month:nth-child(' + j + ') h3').with({ boundTestRun: testController })
+                    }
+                case 2: //MONTHLY TRAFFIC - from child 2 to 13 (Dec to Jan) 
+                    {
+                        return Selector('.blk__text:nth-child(3) .traffic__month:nth-child(' + j + ') > div > div > h2').with({ boundTestRun: testController })
+                    }
+            }
+        },        
     },
 
     commonFunctions:
@@ -78,6 +89,19 @@ module.exports = {
                 return arrayDataList[i] 
             else
                 return arrayDataList.length
+        },
+        monthsOfYear: function(x)
+        {
+            var arrmonthsOfYear = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+            arrmonthsOfYear.reverse()
+            return arrmonthsOfYear[x]
+        },
+        isAddToChromePopupPresent: async function()
+        {
+            var addToChromeExists = await Selector('.js-badge-link-dismiss').with({ boundTestRun: testController }).exists
+            if(addToChromeExists)
+                await testController
+                    .click(Selector('.js-badge-link-dismiss').with({ boundTestRun: testController })) 
         }
-    }
+    }    
 }

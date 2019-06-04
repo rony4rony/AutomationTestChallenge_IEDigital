@@ -7,6 +7,7 @@ Feature: DuckDuckGo search engine featuers
 
     Background:
         Given I am browsing the duckduckgo.com website
+        
 
     @AC1
     Scenario: Logo should be visible
@@ -25,19 +26,24 @@ Feature: DuckDuckGo search engine featuers
 
     @AC4
     Scenario: The hamburger menu click should show the themes link
-        When I enter the keyword super in the search textbox
-        When I click on the hamburger menu in the top right
+        When I click on the hamburger menu on the top right
         Then I should see a themes link
 
     @AC5
     Scenario: The color change in themes should change the background color
-        When I click on the hamburger menu in the top right
+        When I click on the hamburger menu on the top right
         When I click on the theme link and select the dark theme
         Then I will see the dark theme is applied
 
     @AC6
     Scenario: Search for the given datas in the datalist should give ten result each
         When I search keywords one after another, I see 10 results each
+
+    @AC7
+    Scenario: Find the 2018 Traffic is sum of individual months
+        Given I am on the traffic page 
+        When I click on the 2018 Traffic section 
+        Then I should see all the months listed in the order from Dec to Jan and Total Direct Queries should be equal to the sum of months
 
     
             
